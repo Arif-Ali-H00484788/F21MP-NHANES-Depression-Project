@@ -1,11 +1,12 @@
 
 "use server";
 
-import { supabase } from "@/config/supabase";
+import { getServerSupabase } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import type { SentimentAnalysisOutput } from "@/ai/flows/sentiment-analysis";
 
 export async function saveJournalEntry(journalEntry: string, sentimentAnalysis: SentimentAnalysisOutput, entryDate: string) {
+  const supabase = await getServerSupabase();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -43,6 +44,7 @@ export async function saveJournalEntry(journalEntry: string, sentimentAnalysis: 
 }
 
 export async function deleteJournalEntry(entryId: string) {
+  const supabase = await getServerSupabase();
   const {
     data: { user },
   } = await supabase.auth.getUser();
