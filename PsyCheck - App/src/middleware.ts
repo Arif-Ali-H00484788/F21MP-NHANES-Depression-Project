@@ -1,4 +1,4 @@
-
+// Refresh session with Supabase SSR client
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
