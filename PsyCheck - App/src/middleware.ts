@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { getSupabaseEnv } from './lib/supabase/env';
 
 /**
  * Refreshes the Supabase session on every request.
@@ -12,9 +13,11 @@ export async function middleware(request: NextRequest) {
   // Create a single mutable response (you can still call .cookies.set / .delete on it later)
   const response = NextResponse.next();
 
+  const { url, anonKey } = getSupabaseEnv();
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    url,
+    anonKey,
     {
       cookies: {
         /** Read a cookie from the incoming request */
