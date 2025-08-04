@@ -1,15 +1,7 @@
-
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { getSupabaseEnv } from '../lib/supabase/env';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl) {
-  throw new Error("Missing env.NEXT_PUBLIC_SUPABASE_URL");
-}
-if (!supabaseAnonKey) {
-  throw new Error("Missing env.NEXT_PUBLIC_SUPABASE_ANON_KEY");
-}
+const { url: supabaseUrl, anonKey: supabaseAnonKey } = getSupabaseEnv();
 
 // Singleton client for consistent access
 let supabaseInstance: SupabaseClient | null = null;

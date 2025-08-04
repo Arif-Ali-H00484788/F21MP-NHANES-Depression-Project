@@ -1,5 +1,6 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
+import { getSupabaseEnv } from './env';
 
 /**
  * Server-side Supabase client bound to Next.js App Router cookies.
@@ -11,9 +12,11 @@ export function getServerSupabase() {
   // `cookies()` is synchronous in the App Router
   const cookieStore = cookies();
 
+  const { url, anonKey } = getSupabaseEnv();
+
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    url,
+    anonKey,
     {
       cookies: {
         /** Read a cookie value (undefined if absent) */
